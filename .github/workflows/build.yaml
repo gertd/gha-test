@@ -14,7 +14,6 @@ on:
 
 env:
   PRE_RELEASE: ${{ github.ref == 'refs/heads/main' && 'main' || '' }}
-  SOURCE_TAG: ${{ git describe --tags --abbrev=0 }}
   GO_VERSION: "1.16"
 
 jobs:
@@ -31,6 +30,9 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: ${{ env.GO_VERSION }}
+      - name: Get tag
+        run: |
+          echo "SOURCE_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - 
         name: Display Version
         run: |
