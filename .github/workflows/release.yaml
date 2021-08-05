@@ -1,0 +1,23 @@
+name: release
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+env:
+  PRE_RELEASE: ${{ github.ref == 'refs/heads/main' && 'main' || '' }}
+  SOURCE_TAG: ${{ git describe --tags --abbrev=0 }}
+  GO_VERSION: "1.16"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Display Version
+        run: |
+          echo "SOURCE_TAG ${{ env.SOURCE_TAG }}"
